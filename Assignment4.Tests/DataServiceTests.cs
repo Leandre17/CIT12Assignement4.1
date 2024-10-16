@@ -96,19 +96,19 @@ public class DataServiceTests
         var product = new Product();
         Assert.Equal(0, product.Id);
         Assert.Null(product.Name);
-        Assert.Equal(0.0, product.UnitPrice);
+        Assert.Equal(0.0m, product.UnitPrice);
         Assert.Null(product.QuantityPerUnit);
         Assert.Equal(0, product.UnitsInStock);
     }
 
-    // [Fact]
-    // public void GetProduct_ValidId_ReturnsProductWithCategory()
-    // {
-    //     var service = new DataService();
-    //     var product = service.GetProduct(1);
-    //     Assert.Equal("Chai", product.Name);
-    //     Assert.Equal("Beverages", product.CategoryName);
-    // }
+    [Fact]
+    public void GetProduct_ValidId_ReturnsProductWithCategory()
+    {
+        var service = new DataService();
+        var product = service.GetProduct(1);
+        Assert.Equal("Chai", product.Name);
+        Assert.Equal("Beverages", product.CategoryName);
+    }
 
     // [Fact]
     // public void GetProductsByCategory_ValidId_ReturnsProductWithCategory()
