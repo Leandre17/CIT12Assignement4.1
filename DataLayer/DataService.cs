@@ -107,6 +107,29 @@ public class DataService : IDataService
     {
         var db = new NorthwindContext();
 
-        return db.Products.Include(p => p.Category).Where(x => x.CategoryId == categoryId).ToList();
+        return db.Products.Include(p => p.Category).Where(x => x.CategoryId == categoryId).Select(p => new Product
+        {
+            Id = p.Id,
+            Name = p.Name,
+            UnitPrice = p.UnitPrice,
+            UnitsInStock = p.UnitsInStock,
+            QuantityPerUnit = p.QuantityPerUnit,
+            CategoryId = p.CategoryId,
+            CategoryName = p.Category.Name
+        }).ToList();
+    }
+    public IList<Product> GetProductByName(string name)
+    {
+        var db = new NorthwindContext();
+        return db.Products.Include(p => p.Category).Where(x => x.Name.Contains(name)).Select(p => new Product
+        {
+            Id = p.Id,
+            ProductName = p.Name,
+            UnitPrice = p.UnitPrice,
+            UnitsInStock = p.UnitsInStock,
+            QuantityPerUnit = p.QuantityPerUnit,
+            CategoryId = p.CategoryId,
+            CategoryName = p.Category.Name
+        }).ToList();
     }
 }

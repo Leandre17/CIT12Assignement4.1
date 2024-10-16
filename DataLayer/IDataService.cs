@@ -17,4 +17,5 @@ public interface IDataService
     IList<Product> GetProducts();
     Product GetProduct(int productId);
     IList<Product> GetProductByCategory(int categoryId);
+    IList<Product> GetProductByName(string name);
 }

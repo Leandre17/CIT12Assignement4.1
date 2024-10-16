@@ -96,7 +96,7 @@ public class DataServiceTests
         var product = new Product();
         Assert.Equal(0, product.Id);
         Assert.Null(product.Name);
-        Assert.Equal(0.0m, product.UnitPrice);
+        Assert.Equal(0.0, product.UnitPrice);
         Assert.Null(product.QuantityPerUnit);
         Assert.Equal(0, product.UnitsInStock);
     }
@@ -110,27 +110,27 @@ public class DataServiceTests
         Assert.Equal("Beverages", product.CategoryName);
     }
 
-    // [Fact]
-    // public void GetProductsByCategory_ValidId_ReturnsProductWithCategory()
-    // {
-    //     var service = new DataService();
-    //     var products = service.GetProductByCategory(1);
-    //     Assert.Equal(12, products.Count);
-    //     Assert.Equal("Chai", products.First().Name);
-    //     Assert.Equal("Beverages", products.First().CategoryName);
-    //     Assert.Equal("Lakkalik��ri", products.Last().Name);
-    // }
+    [Fact]
+    public void GetProductsByCategory_ValidId_ReturnsProductWithCategory()
+    {
+        var service = new DataService();
+        var products = service.GetProductByCategory(1);
+        Assert.Equal(12, products.Count);
+        Assert.Equal("Chai", products.First().Name);
+        Assert.Equal("Beverages", products.First().CategoryName);
+        Assert.Equal("Lakkalikööri", products.Last().Name);
+    }
 
-    // [Fact]
-    // public void GetProduct_NameSubString_ReturnsProductsThatMatchesTheSubString()
-    // {
-    //     var service = new DataService();
-    //     var products = service.GetProductByName("em");
-    //     Assert.Equal(4, products.Count);
-    //     Assert.Equal("NuNuCa Nu�-Nougat-Creme", products.First().ProductName);
-    //     Assert.Equal("Confections", products.First().CategoryName);
-    //     Assert.Equal("Flotemysost", products.Last().ProductName);
-    // }
+    [Fact]
+    public void GetProduct_NameSubString_ReturnsProductsThatMatchesTheSubString()
+    {
+        var service = new DataService();
+        var products = service.GetProductByName("em");
+        Assert.Equal(4, products.Count);
+        Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().ProductName);
+        Assert.Equal("Confections", products.First().CategoryName);
+        Assert.Equal("Flotemysost", products.Last().ProductName);
+    }
 
     // /* orders */
     // [Fact]
