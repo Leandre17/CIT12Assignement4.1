@@ -15,4 +15,6 @@ public interface IDataService
     bool DeleteCategory(int id);
     bool UpdateCategory(int id, string name, string description);
     IList<Product> GetProducts();
+    Product GetProduct(int productId);
+    IList<Product> GetProductByCategory(int categoryId);
 }
