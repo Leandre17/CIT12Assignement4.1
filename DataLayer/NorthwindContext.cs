@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLayer;
+
 internal class NorthwindContext : DbContext
 {
     public DbSet<Category>? Categories { get; set; }

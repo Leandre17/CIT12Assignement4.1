@@ -140,10 +140,10 @@ public class DataService : IDataService
     public Order? GetOrder(int orderId)
     {
         var db = new NorthwindContext();
-        return db.Orders?.Include(o => o.OrderDetails).ThenInclude(od => od.Product)
-    .ThenInclude(p => p.Category)
-    .FirstOrDefault(o => o.Id == orderId);
-
+        var order = db.Orders?.Include(o => o.OrderDetails).ThenInclude(od => od.Product)
+            .ThenInclude(p => p.Category)
+            .FirstOrDefault(o => o.Id == orderId);
+        return order;
     }
     public IList<OrderDTO>? GetOrders()
     {
@@ -160,6 +160,21 @@ public class DataService : IDataService
                 Freight = o.Freight,
                 ProductName = o.OrderDetails.Select(od => od.Product.Name).ToList()
             }).ToList();
+    }
+    public IList<OrderDetails>? GetOrderDetailsByOrderId(int orderId)
+    {
+        var db = new NorthwindContext();
+        return db.OrderDetails?.Include(od => od.Product).Where(x => x.OrderId == orderId).ToList();
+    }
+    public IList<OrderDetails>? GetOrderDetailsByProductId(int productId)
+    {
+        var db = new NorthwindContext();
+        return db.OrderDetails
+            .Include(od => od.Product) // Include Product
+            .Include(od => od.Order)   // Include Order directly, not with ThenInclude
+            .Where(x => x.ProductId == productId)
+            .OrderBy(x => x.OrderId)
+            .ToList();
     }
 }
 

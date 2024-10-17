@@ -21,4 +21,6 @@ public interface IDataService
 
     Order? GetOrder(int orderId);
     IList<OrderDTO>? GetOrders();
+    IList<OrderDetails>? GetOrderDetailsByOrderId(int orderId);
+    IList<OrderDetails>? GetOrderDetailsByProductId(int productId);
 }
