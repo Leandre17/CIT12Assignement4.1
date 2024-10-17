@@ -17,8 +17,8 @@ public class DataServiceTests
     {
         var service = new DataService();
         var categories = service.GetCategories();
-        Assert.Equal(8, categories.Count);
-        Assert.Equal("Beverages", categories.First().Name);
+        Assert.Equal(8, categories?.Count);
+        Assert.Equal("Beverages", categories?.First().Name);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class DataServiceTests
     {
         var service = new DataService();
         var category = service.GetCategory(1);
-        Assert.Equal("Beverages", category.Name);
+        Assert.Equal("Beverages", category?.Name);
     }
 
     [Fact]
@@ -72,11 +72,12 @@ public class DataServiceTests
 
         category = service.GetCategory(category.Id);
 
-        Assert.Equal("UpdatedName", category.Name);
-        Assert.Equal("UpdatedDescription", category.Description);
+        Assert.Equal("UpdatedName", category?.Name);
+        Assert.Equal("UpdatedDescription", category?.Description);
 
         // cleanup
-        service.DeleteCategory(category.Id);
+        if (category != null)
+            service.DeleteCategory(category.Id);
     }
 
     [Fact]
@@ -106,8 +107,8 @@ public class DataServiceTests
     {
         var service = new DataService();
         var product = service.GetProduct(1);
-        Assert.Equal("Chai", product.Name);
-        Assert.Equal("Beverages", product.CategoryName);
+        Assert.Equal("Chai", product?.Name);
+        Assert.Equal("Beverages", product?.CategoryName);
     }
 
     [Fact]
@@ -115,17 +116,17 @@ public class DataServiceTests
     {
         var service = new DataService();
         var products = service.GetProductByCategory(1);
-        Assert.Equal(12, products.Count);
-        Assert.Equal("Chai", products.First().Name);
-        Assert.Equal("Beverages", products.First().CategoryName);
-        Assert.Equal("Lakkalikööri", products.Last().Name);
+        Assert.Equal(12, products?.Count);
+        Assert.Equal("Chai", products?.First().Name);
+        Assert.Equal("Beverages", products?.First().CategoryName);
+        Assert.Equal("Lakkalikööri", products?.Last().Name);
     }
 
     [Fact]
     public void GetProduct_NameSubString_ReturnsProductsThatMatchesTheSubString()
     {
         var service = new DataService();
-        var products = service.GetProductByName("em");
+        var products = service.GetProductByName("em") ?? new List<ProductDTO>();
         Assert.Equal(4, products.Count);
         Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().ProductName);
         Assert.Equal("Confections", products.First().CategoryName);
@@ -150,9 +151,9 @@ public class DataServiceTests
     {
         var service = new DataService();
         var order = service.GetOrder(10248);
-        Assert.Equal(3, order.OrderDetails?.Count);
-        Assert.Equal("Queso Cabrales", order.OrderDetails?.First().Product?.Name);
-        Assert.Equal("Dairy Products", order.OrderDetails?.First().Product?.Category?.Name);
+        Assert.Equal(3, order?.OrderDetails?.Count);
+        Assert.Equal("Queso Cabrales", order?.OrderDetails?.First().Product?.Name);
+        Assert.Equal("Dairy Products", order?.OrderDetails?.First().Product?.Category?.Name);
     }
 
     [Fact]
@@ -160,7 +161,7 @@ public class DataServiceTests
     {
         var service = new DataService();
         var orders = service.GetOrders();
-        Assert.Equal(830, orders.Count);
+        Assert.Equal(830, orders?.Count);
     }
 
 

@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace DataLayer;
 internal class NorthwindContext : DbContext
 {
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<OrderDetails> OrderDetails { get; set; }
-    public DbSet<Order> Orders { get; set; }
+    public DbSet<Category>? Categories { get; set; }
+    public DbSet<Product>? Products { get; set; }
+    public DbSet<OrderDetails>? OrderDetails { get; set; }
+    public DbSet<Order>? Orders { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
