@@ -132,36 +132,36 @@ public class DataServiceTests
         Assert.Equal("Flotemysost", products.Last().ProductName);
     }
 
-    // /* orders */
-    // [Fact]
-    // public void Order_Object_HasIdDatesAndOrderDetails()
-    // {
-    //     var order = new Order();
-    //     Assert.Equal(0, order.Id);
-    //     Assert.Equal(new DateTime(), order.Date);
-    //     Assert.Equal(new DateTime(), order.Required);
-    //     Assert.Null(order.OrderDetails);
-    //     Assert.Null(order.ShipName);
-    //     Assert.Null(order.ShipCity);
-    // }
+    /* orders */
+    [Fact]
+    public void Order_Object_HasIdDatesAndOrderDetails()
+    {
+        var order = new Order();
+        Assert.Equal(0, order.Id);
+        Assert.Equal(new DateTime(), order.Date);
+        Assert.Equal(new DateTime(), order.Required);
+        Assert.Null(order.OrderDetails);
+        Assert.Null(order.ShipName);
+        Assert.Null(order.ShipCity);
+    }
 
-    // [Fact]
-    // public void GetOrder_ValidId_ReturnsCompleteOrder()
-    // {
-    //     var service = new DataService();
-    //     var order = service.GetOrder(10248);
-    //     Assert.Equal(3, order.OrderDetails?.Count);
-    //     Assert.Equal("Queso Cabrales", order.OrderDetails?.First().Product?.Name);
-    //     Assert.Equal("Dairy Products", order.OrderDetails?.First().Product?.Category?.Name);
-    // }
+    [Fact]
+    public void GetOrder_ValidId_ReturnsCompleteOrder()
+    {
+        var service = new DataService();
+        var order = service.GetOrder(10248);
+        Assert.Equal(3, order.OrderDetails?.Count);
+        Assert.Equal("Queso Cabrales", order.OrderDetails?.First().Product?.Name);
+        Assert.Equal("Dairy Products", order.OrderDetails?.First().Product?.Category?.Name);
+    }
 
-    // [Fact]
-    // public void GetOrders()
-    // {
-    //     var service = new DataService();
-    //     var orders = service.GetOrders();
-    //     Assert.Equal(830, orders.Count);
-    // }
+    [Fact]
+    public void GetOrders()
+    {
+        var service = new DataService();
+        var orders = service.GetOrders();
+        Assert.Equal(830, orders.Count);
+    }
 
 
     // /* order details */

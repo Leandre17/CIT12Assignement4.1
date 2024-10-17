@@ -82,54 +82,86 @@ public class DataService : IDataService
         return db.SaveChanges() > 0;
 
     }
-    public Product GetProduct(int productId)
+    public ProductDTO GetProduct(int productId)
     {
         var db = new NorthwindContext();
         var product = db.Products
                    .Include(p => p.Category)
                    .Where(p => p.Id == productId)
-                   .Select(p => new Product
+                   .Select(p => new ProductDTO
                    {
                        Id = p.Id,
+                       ProductName = p.Name,
                        Name = p.Name,
                        UnitPrice = p.UnitPrice,
                        UnitsInStock = p.UnitsInStock,
                        QuantityPerUnit = p.QuantityPerUnit,
                        CategoryId = p.CategoryId,
-                       CategoryName = p.Category.Name
+                       CategoryName = p.Category.Name  // Assign category name here
                    })
                    .FirstOrDefault();
 
         return product;
     }
 
-    public IList<Product> GetProductByCategory(int categoryId)
+    public IList<ProductDTO> GetProductByCategory(int categoryId)
     {
         var db = new NorthwindContext();
 
-        return db.Products.Include(p => p.Category).Where(x => x.CategoryId == categoryId).Select(p => new Product
+        return db.Products.Include(p => p.Category).Where(x => x.CategoryId == categoryId).Select(p => new ProductDTO
         {
             Id = p.Id,
+            ProductName = p.Name,
             Name = p.Name,
             UnitPrice = p.UnitPrice,
             UnitsInStock = p.UnitsInStock,
             QuantityPerUnit = p.QuantityPerUnit,
             CategoryId = p.CategoryId,
-            CategoryName = p.Category.Name
+            CategoryName = p.Category.Name  // Assign category name here
         }).ToList();
     }
-    public IList<Product> GetProductByName(string name)
+    public IList<ProductDTO> GetProductByName(string name)
     {
         var db = new NorthwindContext();
-        return db.Products.Include(p => p.Category).Where(x => x.Name.Contains(name)).Select(p => new Product
-        {
-            Id = p.Id,
-            ProductName = p.Name,
-            UnitPrice = p.UnitPrice,
-            UnitsInStock = p.UnitsInStock,
-            QuantityPerUnit = p.QuantityPerUnit,
-            CategoryId = p.CategoryId,
-            CategoryName = p.Category.Name
-        }).ToList();
+        return db.Products
+    .Include(p => p.Category)
+    .Where(x => x.Name.Contains(name))
+    .Select(p => new ProductDTO
+    {
+        Id = p.Id,
+        ProductName = p.Name,
+        Name = p.Name,
+        UnitPrice = p.UnitPrice,
+        UnitsInStock = p.UnitsInStock,
+        QuantityPerUnit = p.QuantityPerUnit,
+        CategoryId = p.CategoryId,
+        CategoryName = p.Category.Name  // Assign category name here
+    }).ToList();
+    }
+    public Order GetOrder(int orderId)
+    {
+        var db = new NorthwindContext();
+        return db.Orders.Include(o => o.OrderDetails)
+    .ThenInclude(od => od.Product)
+    .ThenInclude(p => p.Category)
+    .FirstOrDefault(o => o.Id == orderId);
+
+    }
+    public IList<OrderDTO> GetOrders()
+    {
+        var db = new NorthwindContext();
+        return db.Orders.Include(o => o.OrderDetails)
+            .ThenInclude(od => od.Product)
+            .Select(o => new OrderDTO
+            {
+                Id = o.Id,
+                Required = o.Required,
+                ShipName = o.ShipName,
+                ShipAddress = o.ShipAddress,
+                ShipCity = o.ShipCity,
+                Freight = o.Freight,  // Explicitly cast double to decimal
+                ProductName = o.OrderDetails.Select(od => od.Product.Name).ToList()
+            }).ToList();
     }
 }
+
